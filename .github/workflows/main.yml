@@ -18,6 +18,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          ruby-version: 3.1
       - name: Run linters
         continue-on-error: true
         run: bin/rubocop --parallel
@@ -45,6 +46,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          ruby-version: 3.1
       - name: Setup test DB
         env:
           RAILS_ENV: test
