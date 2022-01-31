@@ -1,8 +1,9 @@
 # Enummer
 
-[![Gem](https://img.shields.io/gem/v/enummer)](https://rubygems.org/gems/enummer)
-[![Licence](https://img.shields.io/github/license/shkm/enummer)](https://github.com/shkm/enummer/blob/main/MIT-LICENSE)
+[![Gem](https://img.shields.io/gem/v/enummer?color=green)](https://rubygems.org/gems/enummer)
 [![Codecov](https://img.shields.io/codecov/c/github/shkm/enummer/main)](https://app.codecov.io/gh/shkm/enummer)
+[![Licence](https://img.shields.io/github/license/shkm/enummer)](https://github.com/shkm/enummer/blob/main/MIT-LICENSE)
+[![Documentation](https://img.shields.io/badge/yard-docs-informational)](https://www.rubydoc.info/github/shkm/enummer/main)
 
 Enummer is a lightweight answer for adding enums with multiple values to Rails, with a similar syntax to Rails' built-in `enum`. It officially supports only PostgreSQL and recent Rails versions because I don't really care about anything else, but PRs are welcome.
 
