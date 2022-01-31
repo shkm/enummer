@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2022_01_30_163927) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,5 +21,4 @@ ActiveRecord::Schema.define(version: 2022_01_30_163927) do
     t.bit "transport", limit: 8
     t.bit "home", limit: 8
   end
-
 end

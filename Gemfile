@@ -7,6 +7,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem "pg"
-gem "rspec"
 gem "rubocop-rails"
+gem "bundler-audit"
 gem "standard"
+
+group :test do
+  gem "simplecov", require: false
+  gem 'simplecov-cobertura', require: false
+end

@@ -5,10 +5,10 @@ require "test_helper"
 class EnummerTest < ActiveSupport::TestCase
   def setup
     @user1 = User.new(permissions: %i[read write execute],
-                      facial_features: %i[nose],
-                      diets: %i[cigarettes alcohol],
-                      transport: %i[submarine],
-                      home: %i[box])
+      facial_features: %i[nose],
+      diets: %i[cigarettes alcohol],
+      transport: %i[submarine],
+      home: %i[box])
     @user2 = User.new(permissions: %i[read write])
     @user3 = User.new(permissions: %i[execute])
 
@@ -76,8 +76,7 @@ class EnummerTest < ActiveSupport::TestCase
     refute @user1.consumes_greens?
   end
 
-  test 'methods respect _suffix' do
-
+  test "methods respect _suffix" do
     refute @user1.car_transport?
     refute @user1.truck_transport?
     assert @user1.submarine_transport?
