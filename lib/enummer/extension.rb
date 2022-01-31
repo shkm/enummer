@@ -2,6 +2,11 @@
 
 module Enummer
   module Extension
+    # @param [Hash] values The attribute name to options mapping for an multi-option enum
+    # @option values [Boolean|String] :_prefix The prefix to give to generated methods. If true, uses the attribute name.
+    # @option values [Boolean|String] :_suffix The suffix to give to generated methods. If true, uses the attribute name.
+    # @example Defining an enummer with a prefix. This would generate `#can_read?`, `#can_read=`, `#can_read!`, `.can_read`, etc.
+    #   enummer permissions: %i[read write execute], :_prefix: 'can'
     def enummer(values)
       options = {}
       options[:_prefix] = values.delete(:_prefix)

@@ -4,18 +4,23 @@ require "active_record/type"
 
 module Enummer
   class EnummerType < ::ActiveRecord::Type::Value
-    attr_reader :bit_pairs
-
+    # @param [Array<Symbol>] value_names list of all possible values for this type
+    # @param [Integer] limit The size limit of the bit field
     def initialize(value_names:, limit:)
       @value_names = value_names
       @bit_pairs = determine_bit_pairs(value_names)
       @limit = limit
     end
 
+    # @return Symbol Representation of this type
+    # @example
+    #   :enummer[read|write|execute]
     def type
       "enummer[#{@value_names.join("|")}]".to_sym
     end
 
+    # @param [Symbol|Array<Symbol>] value Current value represented as one or more symbols
+    # @return String Bitstring representation of values
     def serialize(value)
       return unless value
 
@@ -24,6 +29,8 @@ module Enummer
       int.to_s(2).rjust(@limit, "0")
     end
 
+    # @param [String] value Bitstring representation of values
+    # @return [Array<Symbol>] Current value represented as symbols
     def deserialize(value)
       return [] unless value
 
