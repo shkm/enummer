@@ -29,6 +29,9 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [2.7, 3.0, 3.1]
     services:
       postgres:
         image: postgres:14
@@ -46,7 +49,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          ruby-version: 3.1
+          ruby-version: ${{ matrix.ruby }}
       - name: Setup test DB
         env:
           RAILS_ENV: test
