@@ -1,7 +1,14 @@
 services:
-  db:
+  postgres:
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: dummy_test
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
