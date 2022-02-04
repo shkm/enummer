@@ -5,7 +5,7 @@
 [![Licence](https://img.shields.io/github/license/shkm/enummer)](https://github.com/shkm/enummer/blob/main/MIT-LICENSE)
 [![Documentation](https://img.shields.io/badge/yard-docs-informational)](https://www.rubydoc.info/github/shkm/enummer/main)
 
-Enummer is a lightweight answer for adding enums with multiple values to Rails, with a similar syntax to Rails' built-in `enum`. It officially supports only PostgreSQL and recent Rails versions because I don't really care about anything else, but PRs are welcome.
+Enummer is a lightweight answer for adding enums with multiple values to Rails, with a similar syntax to Rails' built-in `enum`. At the moment it officially supports only PostgreSQL and recent Rails versions, though YMMV on another DBMS.
 
 ## Installation
 Add `gem "enummer"` to your Gemfile and `bundle`.
@@ -13,21 +13,17 @@ Add `gem "enummer"` to your Gemfile and `bundle`.
 ## Usage
 
 ### Setup
-Create a migration for a bitstring that looks something like this:
+Create a migration for an integer that looks something like this:
 
 ```ruby
 class CreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
-      t.column :permissions, "bit(8)"
+      t.integer :permissions, default: 0, null: false
     end
   end
 end
 ```
-
-Note that the limit is currently **required** — do not use variable bit fields. 1 bit gets you 1 option.
-
-**TODO**: a generator. Because they generate things
 
 Now set up enummer with the available values in your model:
 
@@ -71,7 +67,19 @@ user.update(permissions: %i[read write])
 user.write!
 ```
 
-## Usage outside of Rails
+## FAQ
+
+### Which data type should I use?
+That depends on how many options you expect to store. [In PostgreSQL](https://www.postgresql.org/docs/9.1/datatype-numeric.html) you should be able to store `bytes * 8 - 1` of your data type:
+
+| Type     | Bytes | Values      |
+|----------|-------|-------------|
+| smallint | 2     | 15          |
+| integer  | 4     | 31          |
+| bigint   | 8     | 65          |
+| numeric  | ???   | all of them |
+
+### How can I use it outside of Rails?
 lol stop
 
 ## Contributing

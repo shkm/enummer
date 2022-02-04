@@ -23,7 +23,7 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal %i[read write execute], User.permissions
   end
 
-  test "plain scopes return users with those bits set" do
+  test "plain scopes return users with those values set" do
     assert_equal [@user1, @user2], User.read
     assert_equal [@user1, @user2], User.write
     assert_equal [@user1, @user3], User.execute
@@ -39,8 +39,8 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal [@user2], User.not_execute
   end
 
-  test "it serializes into a bitstring" do
-    assert_equal "00000011", @user2.permissions_before_type_cast
+  test "it serializes into a numeric" do
+    assert_equal 3, @user2.permissions_before_type_cast
   end
 
   test "it deserializes into an array of values" do
@@ -53,10 +53,16 @@ class EnummerTest < ActiveSupport::TestCase
     refute @user2.execute?
   end
 
-  test "using a setter properly modifies the field" do
+  test "setting a setter to true adds the value" do
     @user3.read = true
 
     assert_equal %i[execute read], @user3.permissions
+  end
+
+  test "setting a setter to false removes the value" do
+    @user1.write = false
+
+    assert_equal %i[read execute], @user1.permissions
   end
 
   test "using a bang method properly updates the persisted field" do

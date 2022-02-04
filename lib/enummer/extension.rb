@@ -14,19 +14,25 @@ module Enummer
 
       name, values = values.first
 
-      limit = column_for_attribute(name).limit
-
-      attribute(name, :enummer, value_names: values, limit: limit)
+      attribute(name, :enummer, value_names: values)
 
       singleton_class.__send__(:define_method, name) { values }
 
-      _enummer_build_with_scope(name, values, limit)
-      _enummer_build_values(name, values, limit, options)
+      _enummer_build_with_scope(name, values)
+      _enummer_build_values(name, values, options)
     end
 
     private
 
-    def _enummer_build_values(attribute_name, value_names, limit, options)
+    def _enummer_build_with_scope(attribute_name, value_names)
+      scope "with_#{attribute_name}", lambda { |desired|
+        expected = Array.wrap(desired).sum(0) { |value| 1 << value_names.index(value) }
+
+        where("#{attribute_name} & :expected = :expected", expected: expected)
+      }
+    end
+
+    def _enummer_build_values(attribute_name, value_names, options)
       value_names.each_with_index do |name, i|
         method_name = _enummer_method_name(attribute_name, name, options)
 
@@ -42,21 +48,11 @@ module Enummer
           update(attribute_name => self[attribute_name] + [name])
         end
 
-        bit_position = limit - i - 1
+        bit = 1 << i
 
-        scope method_name, -> { where("get_bit(#{attribute_name}, ?) = 1", bit_position) }
-        scope "not_#{method_name}", -> { where("get_bit(#{attribute_name}, ?) = 0", bit_position) }
+        scope method_name, -> { where("#{attribute_name} & :bit = :bit", bit: bit) }
+        scope "not_#{method_name}", -> { where("#{attribute_name} & :bit != :bit", bit: bit) }
       end
-    end
-
-    def _enummer_build_with_scope(attribute_name, value_names, limit)
-      scope "with_#{attribute_name}", lambda { |desired|
-        desired = Array.wrap(desired)
-
-        bitstring = (0..limit - 1).to_a.sum("") { |i| desired.include?(value_names[i]) ? "1" : "0" }.reverse
-
-        where("#{attribute_name} & :expected = :expected", expected: bitstring)
-      }
     end
 
     def _enummer_method_name(attribute_name, value_name, options)
