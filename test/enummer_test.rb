@@ -53,10 +53,16 @@ class EnummerTest < ActiveSupport::TestCase
     refute @user2.execute?
   end
 
-  test "using a setter properly modifies the field" do
+  test "setting a setter to true adds the value" do
     @user3.read = true
 
     assert_equal %i[execute read], @user3.permissions
+  end
+
+  test "setting a setter to false removes the value" do
+    @user1.write = false
+
+    assert_equal %i[read execute], @user1.permissions
   end
 
   test "using a bang method properly updates the persisted field" do
