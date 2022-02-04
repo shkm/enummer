@@ -5,7 +5,9 @@
 [![Licence](https://img.shields.io/github/license/shkm/enummer?color=%2395afc0)](https://github.com/shkm/enummer/blob/main/MIT-LICENSE)
 [![Documentation](https://img.shields.io/badge/yard-docs-%23686de0)](https://www.rubydoc.info/github/shkm/enummer/main)
 
-Enummer is a lightweight answer for adding enums with multiple values to Rails, with a similar syntax to Rails' built-in `enum`. At the moment it officially supports only PostgreSQL and recent Rails versions, though YMMV on another DBMS.
+Enummer is a lightweight answer for adding enums with multiple values to Rails, with a similar syntax to Rails' built-in `enum`.
+
+Enummer officially supports Ruby versions 2.7, 3.0 and 3.1 with SQLite, PostgreSQL, and MariaDB.
 
 ## Installation
 Add `gem "enummer"` to your Gemfile and `bundle`.
