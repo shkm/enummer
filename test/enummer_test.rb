@@ -23,7 +23,7 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal %i[read write execute], User.permissions
   end
 
-  test "plain scopes return users with those bits set" do
+  test "plain scopes return users with those values set" do
     assert_equal [@user1, @user2], User.read
     assert_equal [@user1, @user2], User.write
     assert_equal [@user1, @user3], User.execute
@@ -39,8 +39,8 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal [@user2], User.not_execute
   end
 
-  test "it serializes into a bitstring" do
-    assert_equal "00000011", @user2.permissions_before_type_cast
+  test "it serializes into a numeric" do
+    assert_equal 3, @user2.permissions_before_type_cast
   end
 
   test "it deserializes into an array of values" do

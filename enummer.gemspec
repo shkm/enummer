@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Jamie Schembri"]
   spec.email = ["jamie@schembri.me"]
   spec.homepage = "https://github.com/shkm/enummer"
-  spec.summary = "Multi-value enums for Rails"
-  spec.description = "Enummer implements multi-value enums with PostgreSQL bitstrings."
+  spec.summary = "Multi-value enums for Rails."
+  spec.description = "Enummer implements multi-value enums with bitwise operations."
   spec.license = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
