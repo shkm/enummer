@@ -29,6 +29,7 @@ module Enummer
     # @return [Array<Symbol>] Current value represented as symbols
     def deserialize(value)
       return [] unless value
+      return [] if value.to_i.zero?
 
       @bit_pairs.each_with_object([]) do |(pair_name, pair_value), value_names|
         next if (value & pair_value).zero?
