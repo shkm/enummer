@@ -29,8 +29,8 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal [@user1, @user3], User.execute
   end
 
-  test "with_ scope returns users without those bits set" do
-    assert_equal [@user1, @user2], User.with_permissions(%i[read write])
+  test "with_ scope returns users with all of those bits set" do
+    assert_equal [@user1], User.with_permissions(%i[execute read write])
   end
 
   test "not scopes return users without those bits set" do

@@ -46,6 +46,21 @@ User.execute
 User.not_execute
 ```
 
+Additionally, a `with_<name>` scope will be generated which returns all records that match all given options. E.g.:
+
+```ruby
+user1 = User.create!(permissions: %i[read write execute])
+user2 = User.create!(permissions: %i[read write])
+user3 = User.create!(permissions: %i[read])
+
+# .where(permissions: ...) will generate an `IN` query, returning all records that have *any* 
+# of those permissions.
+User.where(permissions: %i[read write]) # => [user1, user2, user3]
+
+# .with_permissions will return only users that have at least all of the given set of permissions
+User.with_permissions(%i[read write]) # => [user1, user2]
+```
+
 ### Getter methods
 
 Simply calling the instance method for the column will return an array of options. Question mark methods are also provided.
