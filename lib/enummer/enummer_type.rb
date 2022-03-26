@@ -22,7 +22,7 @@ module Enummer
     def serialize(value)
       return unless value
 
-      Array.wrap(value).sum { |value_name| @bit_pairs.fetch(value_name, 0) }
+      Array.wrap(value).sum { |value_name| @bit_pairs.fetch(value_name.to_sym, 0) }
     end
 
     # @param [Numeric] value Numeric representation of values

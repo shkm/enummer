@@ -65,6 +65,12 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal %i[read execute], @user1.permissions
   end
 
+  test "setting the attribute with strings adds the values" do
+    @user3.update(permissions: ["read", "write"])
+
+    assert_equal %i[read write], @user3.permissions
+  end
+
   test "using a bang method properly updates the persisted field" do
     @user3.read!
     @user3.reload
