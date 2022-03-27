@@ -53,7 +53,7 @@ user1 = User.create!(permissions: %i[read write execute])
 user2 = User.create!(permissions: %i[read write])
 user3 = User.create!(permissions: %i[read])
 
-# .where(permissions: ...) will generate an `IN` query, returning all records that have *any* 
+# .where(permissions: ...) will generate an `IN` query, returning all records that have *any*
 # of those permissions.
 User.where(permissions: %i[read write]) # => [user1, user2, user3]
 
@@ -101,6 +101,17 @@ lol stop
 
 ## Contributing
 Make an issue / PR and we'll see.
+
+### Development
+
+```bash
+$ cd enummer
+$ bundle install
+$ cd test/dummy
+$ RAILS_ENV=test DATABASE_URL=sqlite3:dummy_test rails db:setup
+$ cd ../..
+$ RAILS_ENV=test DATABASE_URL=sqlite3:dummy_test bin/test
+```
 
 ## Alternatives
 - [flag_shih_tzu](https://github.com/pboling/flag_shih_tzu)
