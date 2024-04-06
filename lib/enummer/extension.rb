@@ -43,6 +43,7 @@ module Enummer
           else
             self[attribute_name] -= [name]
           end
+          self[attribute_name].uniq!
         end
         define_method("#{method_name}!") do
           update(attribute_name => self[attribute_name] + [name])

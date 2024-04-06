@@ -96,6 +96,13 @@ class EnummerTest < ActiveSupport::TestCase
     refute @user1.consumes_greens?
   end
 
+  test "update with prefix" do
+    assert @user1.consumes_cigarettes?
+    refute @user1.consumes_greens?
+    @user1.update!(consumes_cigarettes: true)
+    refute @user1.consumes_greens?
+  end
+
   test "methods respect _suffix" do
     refute @user1.car_transport?
     refute @user1.truck_transport?
