@@ -38,7 +38,7 @@ module Enummer
 
         define_method("#{method_name}?") { self[attribute_name].include?(name) }
         define_method("#{method_name}=") do |new_value|
-          if new_value
+          if ActiveModel::Type::Boolean.new.cast(new_value)
             self[attribute_name] += [name]
           else
             self[attribute_name] -= [name]

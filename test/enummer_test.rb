@@ -103,6 +103,11 @@ class EnummerTest < ActiveSupport::TestCase
     refute @user1.consumes_greens?
   end
 
+  test "recognizes boolean params" do
+    @user1.update!(ActionController::Parameters.new({"consumes_cigarettes"=>"false"}).permit(:consumes_cigarettes))
+    refute @user1.consumes_cigarettes?
+  end
+
   test "methods respect _suffix" do
     refute @user1.car_transport?
     refute @user1.truck_transport?
