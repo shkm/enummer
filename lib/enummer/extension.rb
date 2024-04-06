@@ -39,9 +39,9 @@ module Enummer
         define_method("#{method_name}?") { self[attribute_name].include?(name) }
         define_method("#{method_name}=") do |new_value|
           if new_value
-            self[attribute_name].push(name)
+            self[attribute_name] += [name]
           else
-            self[attribute_name].delete(name)
+            self[attribute_name] -= [name]
           end
         end
         define_method("#{method_name}!") do

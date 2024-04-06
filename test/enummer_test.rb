@@ -57,12 +57,20 @@ class EnummerTest < ActiveSupport::TestCase
     @user3.read = true
 
     assert_equal %i[execute read], @user3.permissions
+
+    @user3.save
+
+    assert_equal %i[execute read].sort, @user3.permissions.sort
   end
 
   test "setting a setter to false removes the value" do
     @user1.write = false
 
     assert_equal %i[read execute], @user1.permissions
+
+    @user1.save
+
+    assert_equal %i[read execute].sort, @user1.permissions.sort
   end
 
   test "setting the attribute with strings adds the values" do
