@@ -38,11 +38,12 @@ module Enummer
 
         define_method("#{method_name}?") { self[attribute_name].include?(name) }
         define_method("#{method_name}=") do |new_value|
-          if new_value
-            self[attribute_name].push(name)
+          if ActiveModel::Type::Boolean.new.cast(new_value)
+            self[attribute_name] += [name]
           else
-            self[attribute_name].delete(name)
+            self[attribute_name] -= [name]
           end
+          self[attribute_name].uniq!
         end
         define_method("#{method_name}!") do
           update(attribute_name => self[attribute_name] + [name])

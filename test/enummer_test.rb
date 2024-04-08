@@ -57,12 +57,20 @@ class EnummerTest < ActiveSupport::TestCase
     @user3.read = true
 
     assert_equal %i[execute read], @user3.permissions
+
+    @user3.save
+
+    assert_equal %i[execute read].sort, @user3.permissions.sort
   end
 
   test "setting a setter to false removes the value" do
     @user1.write = false
 
     assert_equal %i[read execute], @user1.permissions
+
+    @user1.save
+
+    assert_equal %i[read execute].sort, @user1.permissions.sort
   end
 
   test "setting the attribute with strings adds the values" do
@@ -86,6 +94,18 @@ class EnummerTest < ActiveSupport::TestCase
     assert @user1.consumes_cigarettes?
     assert @user1.consumes_alcohol?
     refute @user1.consumes_greens?
+  end
+
+  test "update with prefix" do
+    assert @user1.consumes_cigarettes?
+    refute @user1.consumes_greens?
+    @user1.update!(consumes_cigarettes: true)
+    refute @user1.consumes_greens?
+  end
+
+  test "recognizes boolean params" do
+    @user1.update!(ActionController::Parameters.new({"consumes_cigarettes"=>"false"}).permit(:consumes_cigarettes))
+    refute @user1.consumes_cigarettes?
   end
 
   test "methods respect _suffix" do
