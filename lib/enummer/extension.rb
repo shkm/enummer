@@ -37,8 +37,8 @@ module Enummer
       values.each do |name, bit|
         method_name = _enummer_method_name(attribute_name, name, options)
 
-        define_method("#{method_name}?") { self[attribute_name].include?(name) }
-        define_method("#{method_name}=") do |new_value|
+        define_method(:"#{method_name}?") { self[attribute_name].include?(name) }
+        define_method(:"#{method_name}=") do |new_value|
           if ActiveModel::Type::Boolean.new.cast(new_value)
             self[attribute_name] += [name]
           else
@@ -46,7 +46,7 @@ module Enummer
           end
           self[attribute_name].uniq!
         end
-        define_method("#{method_name}!") do
+        define_method(:"#{method_name}!") do
           update(attribute_name => self[attribute_name] + [name])
         end
 

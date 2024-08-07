@@ -15,5 +15,5 @@ group :test do
   gem "sqlite3", "~> 1.4"
   gem "mysql2"
   gem "simplecov", require: false
-  gem 'simplecov-cobertura', require: false
+  gem "simplecov-cobertura", require: false
 end

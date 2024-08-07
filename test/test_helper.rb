@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'simplecov'
+require "simplecov"
 SimpleCov.start do
   enable_coverage :branch
-  add_filter '/test/dummy/'
+  add_filter "/test/dummy/"
 
-  if ENV['CI']
-    require 'simplecov-cobertura'
+  if ENV["CI"]
+    require "simplecov-cobertura"
     SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
   end
 end
 
-  # Configure Rails Environment
+# Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
 require_relative "../test/dummy/config/environment"
