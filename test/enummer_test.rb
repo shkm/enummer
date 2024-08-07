@@ -9,7 +9,7 @@ class EnummerTest < ActiveSupport::TestCase
       diets: %i[cigarettes alcohol],
       transport: %i[submarine],
       home: %i[box])
-    @user2 = User.new(permissions: %i[read write])
+    @user2 = User.new(permissions: %i[read write], diets: %i[cigarettes])
     @user3 = User.new(permissions: %i[execute])
 
     [@user1, @user2, @user3].map { |user| user.save && user.reload }
@@ -33,6 +33,7 @@ class EnummerTest < ActiveSupport::TestCase
     assert_equal [@user1], User.with_permissions(%i[execute read write])
     assert_equal [@user1], User.with_permissions(%w[execute read write])
     assert_equal [@user1, @user2], User.with_permissions(['read', :write])
+    assert_equal [@user1, @user2], User.with_diets(%i[cigarettes])
   end
 
   test "not scopes return users without those bits set" do
@@ -106,7 +107,7 @@ class EnummerTest < ActiveSupport::TestCase
   end
 
   test "recognizes boolean params" do
-    @user1.update!(ActionController::Parameters.new({"consumes_cigarettes"=>"false"}).permit(:consumes_cigarettes))
+    @user1.update!(ActionController::Parameters.new({"consumes_cigarettes" => "false"}).permit(:consumes_cigarettes))
     refute @user1.consumes_cigarettes?
   end
 

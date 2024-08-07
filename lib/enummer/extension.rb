@@ -13,10 +13,11 @@ module Enummer
       options[:_suffix] = values.delete(:_suffix)
 
       name, values = values.first
+      values = _enummer_determine_bit_pairs(values)
 
-      attribute(name, :enummer, value_names: values)
+      attribute(name, :enummer, values: values)
 
-      singleton_class.__send__(:define_method, name) { values }
+      singleton_class.__send__(:define_method, name) { values.keys }
 
       _enummer_build_with_scope(name, values)
       _enummer_build_values(name, values, options)
@@ -24,16 +25,16 @@ module Enummer
 
     private
 
-    def _enummer_build_with_scope(attribute_name, value_names)
+    def _enummer_build_with_scope(attribute_name, values)
       scope "with_#{attribute_name}", lambda { |desired|
-        expected = Array.wrap(desired).sum(0) { |value| 1 << value_names.index(value.to_sym) }
+        expected = Array.wrap(desired).sum(0) { |value| values[value.to_sym] }
 
         where("#{attribute_name} & :expected = :expected", expected: expected)
       }
     end
 
-    def _enummer_build_values(attribute_name, value_names, options)
-      value_names.each_with_index do |name, i|
+    def _enummer_build_values(attribute_name, values, options)
+      values.each do |name, bit|
         method_name = _enummer_method_name(attribute_name, name, options)
 
         define_method("#{method_name}?") { self[attribute_name].include?(name) }
@@ -48,8 +49,6 @@ module Enummer
         define_method("#{method_name}!") do
           update(attribute_name => self[attribute_name] + [name])
         end
-
-        bit = 1 << i
 
         scope method_name, -> { where("#{attribute_name} & :bit = :bit", bit: bit) }
         scope "not_#{method_name}", -> { where("#{attribute_name} & :bit != :bit", bit: bit) }
@@ -68,6 +67,13 @@ module Enummer
       return attribute_name if value == true
 
       value
+    end
+
+    def _enummer_determine_bit_pairs(values)
+      values = values.map.with_index { |value, i| [value, i] }.to_h if values.is_a?(Array)
+      values.transform_values do |shift|
+        1 << shift
+      end
     end
   end
 end
