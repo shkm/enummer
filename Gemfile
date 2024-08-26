@@ -12,7 +12,7 @@ gem "standard"
 
 group :test do
   gem "pg"
-  gem "sqlite3"
+  gem "sqlite3", "~> 1.4"
   gem "mysql2"
   gem "simplecov", require: false
   gem 'simplecov-cobertura', require: false
