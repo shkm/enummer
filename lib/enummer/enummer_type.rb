@@ -21,7 +21,7 @@ module Enummer
     def serialize(value)
       return unless value
 
-      Array.wrap(value).sum { |value_name| @values.fetch(value_name.to_sym, 0) }
+      Array.wrap(value).sum { |value_name| @values.fetch(value_name, 0) }
     end
 
     # @param [Numeric] value Numeric representation of values
@@ -35,6 +35,12 @@ module Enummer
 
         value_names << pair_name
       end
+    end
+
+    # @param [Array<Symbol>] value Current value represented as one or more symbols or strings
+    # @return [Array<Symbol>] Current value represented as symbols
+    def cast(value)
+      Array.wrap(value).map(&:to_sym)
     end
   end
 end

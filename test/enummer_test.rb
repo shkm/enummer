@@ -77,9 +77,18 @@ class EnummerTest < ActiveSupport::TestCase
   end
 
   test "setting the attribute with strings adds the values" do
-    @user3.update(permissions: ["read", "write"])
+    @user3.update(permissions: %w[read write])
 
     assert_equal %i[read write], @user3.permissions
+
+    updated = false
+    callback = lambda { |_name, _start, _finish, _id, payload| updated = true if payload[:sql].starts_with?("UPDATE") }
+
+    ActiveSupport::Notifications.subscribed(callback, "sql.active_record") do
+      @user3.update(permissions: %w[read write])
+    end
+
+    refute updated, "subsequent updates with the same values should be idempotent"
   end
 
   test "using a bang method properly updates the persisted field" do
