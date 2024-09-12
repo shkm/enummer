@@ -21,7 +21,7 @@ jobs:
           ruby-version: 3.3
       - name: Run linters
         continue-on-error: true
-        run: bin/rubocop --parallel
+        run: bundle exec rubocop --parallel
       - name: Run security checks
         continue-on-error: true
         run: bin/bundle-audit --update
