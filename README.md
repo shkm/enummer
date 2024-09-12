@@ -33,6 +33,18 @@ Now set up enummer with the available values in your model:
 enummer permissions: %i[read write execute]
 ```
 
+Similar to `enum`, enummer can also be initialized with a hash, where the numeric index represents the position of the bit that maps to the flag:
+
+``` ruby
+enummer permissions: {
+  read: 0,
+  write: 1,
+  execute: 2
+}
+```
+
+This makes it easier to add/remove entries without worrying about migrating historical data.
+
 ### Scopes
 
 Scopes will now be provided for `<option>` and `not_<option>`.
