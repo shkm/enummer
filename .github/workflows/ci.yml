@@ -24,7 +24,7 @@ jobs:
         run: bundle exec rubocop --parallel
       - name: Run security checks
         continue-on-error: true
-        run: bin/bundle-audit --update
+        run: bundle exec bundle-audit --update
 
   sqlite:
     runs-on: ubuntu-latest
