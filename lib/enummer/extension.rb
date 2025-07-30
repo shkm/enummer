@@ -2,10 +2,13 @@
 
 module Enummer
   module Extension
-    # @param [Hash] values The attribute name to options mapping for an multi-option enum
-    # @option values [Boolean|String] :_prefix The prefix to give to generated methods. If true, uses the attribute name.
-    # @option values [Boolean|String] :_suffix The suffix to give to generated methods. If true, uses the attribute name.
-    # @example Defining an enummer with a prefix. This would generate `#can_read?`, `#can_read=`, `#can_read!`, `.can_read`, etc.
+    # @param [Hash] values The attribute name to options mapping for a multi-option enum
+    # @option values [Boolean|String] :_prefix The prefix to give to generated methods. If true, uses the
+    #   attribute name.
+    # @option values [Boolean|String] :_suffix The suffix to give to generated methods. If true, uses the
+    #   attribute name.
+    # @example Defining an enummer with a prefix. This would generate `#can_read?`, `#can_read=`, `#can_read!`,
+    #   `.can_read`, etc.
     #   enummer permissions: %i[read write execute], :_prefix: 'can'
     def enummer(values)
       options = {}
@@ -27,7 +30,7 @@ module Enummer
 
     def _enummer_build_with_scope(attribute_name, values)
       scope "with_#{attribute_name}", lambda { |desired|
-        expected = Array.wrap(desired).sum(0) { |value| values[value.to_sym] }
+        expected = Array.wrap(desired).sum { |value| values[value.to_sym] }
 
         where("#{attribute_name} & :expected = :expected", expected: expected)
       }
@@ -59,7 +62,7 @@ module Enummer
       prefix = _enummer_affix(attribute_name, options[:_prefix])
       suffix = _enummer_affix(attribute_name, options[:_suffix])
 
-      [prefix, value_name, suffix].compact.join("_")
+      [prefix, value_name, suffix].compact.join('_')
     end
 
     def _enummer_affix(attribute_name, value)

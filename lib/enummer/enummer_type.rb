@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require "active_record/type"
+require 'active_record/type'
 
 module Enummer
   class EnummerType < ::ActiveRecord::Type::Value
     # @param [Array<Symbol>] values hash with bit-value pairs for all possible values for this type
     def initialize(values:)
+      super
       @values = values
     end
 
@@ -13,7 +14,7 @@ module Enummer
     # @example
     #   :enummer[read|write|execute]
     def type
-      :"enummer[#{@values.keys.join("|")}]"
+      :"enummer[#{@values.keys.join('|')}]"
     end
 
     # @param [Symbol|Array<Symbol>] value Current value represented as one or more symbols
@@ -31,7 +32,7 @@ module Enummer
       return [] if value.to_i.zero?
 
       @values.each_with_object([]) do |(pair_name, pair_value), value_names|
-        next if (value & pair_value).zero?
+        next if value.nobits?(pair_value)
 
         value_names << pair_name
       end

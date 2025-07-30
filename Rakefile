@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require "bundler/setup"
+require 'bundler/setup'
 
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
