@@ -59,7 +59,7 @@ module Enummer
       prefix = _enummer_affix(attribute_name, options[:_prefix])
       suffix = _enummer_affix(attribute_name, options[:_suffix])
 
-      [prefix, value_name, suffix].compact.join("_")
+      [prefix, value_name, suffix].compact.join('_')
     end
 
     def _enummer_affix(attribute_name, value)

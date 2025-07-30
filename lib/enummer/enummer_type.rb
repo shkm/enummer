@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_record/type"
+require 'active_record/type'
 
 module Enummer
   class EnummerType < ::ActiveRecord::Type::Value
@@ -13,7 +13,7 @@ module Enummer
     # @example
     #   :enummer[read|write|execute]
     def type
-      :"enummer[#{@values.keys.join("|")}]"
+      :"enummer[#{@values.keys.join('|')}]"
     end
 
     # @param [Symbol|Array<Symbol>] value Current value represented as one or more symbols
