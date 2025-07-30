@@ -9,6 +9,7 @@ gemspec
 gem "rubocop-rails"
 gem "bundler-audit"
 gem "standard"
+gem "rails", "~> 7.1.0"
 
 group :test do
   gem "simplecov", require: false
