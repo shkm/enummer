@@ -22,10 +22,8 @@ jobs:
           bundler-cache: true
           ruby-version: 3.3
       - name: Run linters
-        continue-on-error: true
         run: bundle exec rubocop --parallel
       - name: Run security checks
-        continue-on-error: true
         run: bundle exec bundle-audit --update
 
   sqlite:
