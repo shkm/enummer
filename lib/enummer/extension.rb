@@ -27,7 +27,7 @@ module Enummer
 
     def _enummer_build_with_scope(attribute_name, values)
       scope "with_#{attribute_name}", lambda { |desired|
-        expected = Array.wrap(desired).sum(0) { |value| values[value.to_sym] }
+        expected = Array.wrap(desired).sum { |value| values[value.to_sym] }
 
         where("#{attribute_name} & :expected = :expected", expected: expected)
       }

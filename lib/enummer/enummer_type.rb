@@ -31,7 +31,7 @@ module Enummer
       return [] if value.to_i.zero?
 
       @values.each_with_object([]) do |(pair_name, pair_value), value_names|
-        next if (value & pair_value).zero?
+        next if value.nobits?(pair_value)
 
         value_names << pair_name
       end
