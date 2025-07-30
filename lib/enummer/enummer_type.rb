@@ -6,6 +6,7 @@ module Enummer
   class EnummerType < ::ActiveRecord::Type::Value
     # @param [Array<Symbol>] values hash with bit-value pairs for all possible values for this type
     def initialize(values:)
+      super
       @values = values
     end
 
