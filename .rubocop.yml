@@ -1,0 +1,9 @@
+plugins: rubocop-rails
+
+AllCops:
+  Exclude:
+    - test/dummy/**/*
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
